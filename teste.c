@@ -39,18 +39,16 @@ typedef struct {
 // Adicione mais parâmetros caso ache necessário
 
 int fifo(int8_t** page_table, int num_pages, int prev_page, int fifo_frm, int num_frames, int clock) {
-    int i = 0;
-	while(i < num_pages){
-		// se o frame armazenado pelo fifo_frm for igual ao endereço na tabela
-        // acontece page fault
-		if (page_table[i][PT_FRAMEID] == fifo_frm) {
-			//printf("fifo_frm = %d\ni = %d\n\n", fifo_frm, i);
-			return i;
+    int count = 0;
+	while (count < num_pages) {
+		if (page_table[count][PT_FRAMEID] == fifo_frm) {
+		    // caso o frame armazenado pelo argumento fifo_frm for igual
+            // ao endereço na tabela de páginas, ocorre page fault
+			return count;
 		}
-        i++;
+        count++;
 	}
     return -1;
-    
 }
 
 int second_chance(int8_t** page_table, int num_pages, int prev_page,
